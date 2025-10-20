@@ -1,3 +1,4 @@
+import Home from '@/app/view/Home';
 import Login from '@/app/view/Login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,6 +19,12 @@ const telas: Tela[] = [
     inicial: true,
     rota: "login",
     componente: Login
+  },
+  {
+    titulo: "Home",
+    inicial: false,
+    rota: "home",
+    componente: Home
   }
 ];
 

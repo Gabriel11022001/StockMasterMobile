@@ -1,3 +1,4 @@
+import Usuario from "@/app/tipos/usuario";
 import Botao from "@/components/Botao";
 import CampoLogin from "@/components/CampoLogin";
 import Tela from "@/components/Tela";
@@ -5,13 +6,14 @@ import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import styles from "./styles";
 
-const Login = () => {
+const Login = ({ navigation }: any) => {
 
   const [ email, setEmail ] = useState<string>("");
   const [ senha, setSenha ] = useState<string>("");
   const [ senhaVisivel, setSenhaVisivel ] = useState<boolean>(false);
   const [ erroEmail, setErroEmail ] = useState<string>("");
   const [ erroSenha, setErroSenha ] = useState<string>("");
+  const [ realizandoRequisicao, setRealizandoRequisicao ] = useState<boolean>(false);
 
   const onDigitandoEmail = () => {
     setErroEmail("");
@@ -53,6 +55,56 @@ const Login = () => {
     onDigitandoSenha();
   }, [ senha ]);
 
+  useEffect(() => {
+    setErroEmail("");
+    setErroSenha("");
+  }, []);
+
+  // apresentar um alerta de erro para o usuário
+  const apresentarAlertaErro = (mensagemErro: string): void => {
+
+  }
+
+  // validar campos do usuário no login
+  const validarCamposLogin = (): boolean => {
+
+    return true
+  }
+
+  // realizar login no app
+  const realizarLogin = async () => {
+    setRealizandoRequisicao(true);
+
+    try {
+
+      if (validarCamposLogin()) {
+        const usuarioLogin: Usuario = {
+          email: email.trim(),
+          senha: senha.trim(),
+          onApresentarDadosUsuario: function (): void {
+            console.log(`E-mail: ${ this.email }`);
+            console.log(`Senha: ${ this.senha }`);
+          }
+        };   
+        
+        usuarioLogin.onApresentarDadosUsuario();
+
+        // salvar os dados do usuário em memória
+
+        // redirecionar o usuário para a tela home do app
+        navigation.navigate("home");
+      }
+
+    } catch (e) {
+      console.log(`Erro ao tentar-se efetuar o login: ${ e }`);
+
+      apresentarAlertaErro("Erro ao tentar-se realizar login, tente novamente!");
+    } finally {
+      setRealizandoRequisicao(false);
+    }
+
+  }
+
   return (
     <Tela>
       <View style={ styles.container }>
@@ -89,7 +141,7 @@ const Login = () => {
 
           } } />
         { erroSenha && <Text style={ styles.erroCamposLogin }>{ erroSenha }</Text> } 
-        <Botao texto="Entrar" onPress={ () => {} } />
+        <Botao texto="Entrar" onPress={ realizarLogin } />
       </View>
     </Tela>
   );
