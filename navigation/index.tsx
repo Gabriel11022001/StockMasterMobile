@@ -1,8 +1,12 @@
+import CadastroCliente from '@/app/view/CadastroCliente';
+import Clientes from '@/app/view/Clientes';
 import Home from '@/app/view/Home';
 import Login from '@/app/view/Login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { FontAwesome } from 'react-native-vector-icons';
 
 interface Tela {
 
@@ -10,6 +14,8 @@ interface Tela {
   rota: string;
   inicial: boolean;
   componente: React.FC;
+  add: boolean;
+  addRedirecionar?: string;
 
 }
 
@@ -18,13 +24,30 @@ const telas: Tela[] = [
     titulo: "Login",
     inicial: true,
     rota: "login",
-    componente: Login
+    componente: Login,
+    add: false
   },
   {
     titulo: "Home",
     inicial: false,
     rota: "home",
-    componente: Home
+    componente: Home,
+    add: false
+  },
+  {
+    titulo: "Clientes",
+    inicial: false,
+    rota: "clientes",
+    componente: Clientes,
+    add: true,
+    addRedirecionar: "cadastroClientes"
+  },
+  {
+    titulo: "Cadastro de Cliente",
+    inicial: false,
+    rota: "cadastroClientes",
+    componente: CadastroCliente,
+    add: false
   }
 ];
 
@@ -40,8 +63,29 @@ const Navigation = () => {
       { telas.map((tela: Tela) => {
         
         return (
-          <Stack.Screen name={ tela.rota } component={ tela.componente } options={ {
-            title: tela.titulo
+          <Stack.Screen name={ tela.rota } component={ tela.componente } options={ ({ navigation }) => {
+
+            return {
+              title: tela.titulo,
+              headerRight: () => {
+
+                if (!tela.add) {
+
+                  return false;
+                }
+                
+                return <TouchableOpacity
+                  onPress={ () => {
+
+                    if (tela.addRedirecionar != undefined && tela.addRedirecionar != null) {
+                      navigation.navigate(tela.addRedirecionar);
+                    }
+
+                  } }>
+                    <FontAwesome name="plus" color="#000" size={ 30 } />
+                </TouchableOpacity>
+              }
+            }
           } } />
         )
       }) }

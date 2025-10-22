@@ -141,7 +141,11 @@ const Login = ({ navigation }: any) => {
 
           } } />
         { erroSenha && <Text style={ styles.erroCamposLogin }>{ erroSenha }</Text> } 
-        <Botao texto="Entrar" onPress={ realizarLogin } />
+        <Botao texto="Entrar" onPress={ realizarLogin } habilitado={ 
+          erroEmail == "" 
+          && erroSenha == ""
+          && email != ""
+          && senha != "" } />
       </View>
     </Tela>
   );

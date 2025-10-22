@@ -9,8 +9,13 @@ const styles = StyleSheet.create({
     height: 60,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#117dd4",
     marginTop: 20
+  },
+  botaoHabilitado: {
+    backgroundColor: "#117dd4"
+  },
+  botaoDesabilitado: {
+    backgroundColor: "#bdc3c7"
   },
   texto: {
     color: "#fff",

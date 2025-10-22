@@ -4,15 +4,17 @@ import styles from "./styles";
 interface BotaoProps {
 
   texto: string;
+  habilitado?: boolean;
   onPress: () => void;
 
 }
 
-export default function Botao({ texto, onPress }: BotaoProps) {
+export default function Botao({ texto, onPress, habilitado }: BotaoProps) {
 
   return <TouchableOpacity
-    style={ styles.botao }
+    disabled={ !habilitado }
+    style={ [ styles.botao, habilitado ? styles.botaoHabilitado : styles.botaoDesabilitado ] }
     onPress={ onPress }>
-      <Text style={ styles.texto }>{ texto }</Text>
+      <Text style={ [ styles.texto, { color: habilitado ? "#fff" : "#95a5a6" } ] }>{ texto }</Text>
   </TouchableOpacity>
 }
