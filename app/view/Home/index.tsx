@@ -16,7 +16,9 @@ const Home = ({ navigation }: any) => {
         <OpcaoMenuHome icone="person-walking" titulo="Clientes" onRedirecionar={ () => {
           redirecionar("clientes");
         } } />
-        <OpcaoMenuHome icone="person-walking" titulo="Produtos" onRedirecionar={ () => {} } />
+        <OpcaoMenuHome icone="person-walking" titulo="Produtos" onRedirecionar={ () => {
+          redirecionar("produtos");
+        } } />
       </View>
       <View style={ styles.containerOpcao }>
         <OpcaoMenuHome icone="person-walking" titulo="Categorias de produtos" onRedirecionar={ () => {} } />

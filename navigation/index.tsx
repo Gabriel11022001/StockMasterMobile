@@ -1,7 +1,9 @@
 import CadastroCliente from '@/app/view/CadastroCliente';
+import CadastroProduto from '@/app/view/CadastroProduto';
 import Clientes from '@/app/view/Clientes';
 import Home from '@/app/view/Home';
 import Login from '@/app/view/Login';
+import Produtos from '@/app/view/Produtos';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
@@ -47,6 +49,21 @@ const telas: Tela[] = [
     inicial: false,
     rota: "cadastroClientes",
     componente: CadastroCliente,
+    add: false
+  },
+  {
+    titulo: "Produtos",
+    inicial: false,
+    rota: "produtos",
+    componente: Produtos,
+    add: true,
+    addRedirecionar: "cadastroProdutos"
+  },
+  {
+    titulo: "Cadastro de produto",
+    inicial: false,
+    rota: "cadastroProdutos",
+    componente: CadastroProduto,
     add: false
   }
 ];

@@ -26,7 +26,7 @@ const CampoLogin = ({
 
   return (
     <View style={ [ styles.container, { marginTop: margemTopo } ] }>
-      { senha ? <FontAwesome name="lock" color="#117dd4" size={ 30 } /> : <FontAwesome name="at" color="#117dd4" size={ 30 } /> }
+      { senha ? <FontAwesome name="lock" color="#117dd4" size={ 20 } /> : <FontAwesome name="at" color="#117dd4" size={ 20 } /> }
       <TextInput
         style={ styles.campo }
         value={ valor }
@@ -39,7 +39,7 @@ const CampoLogin = ({
         keyboardType={ !senha ? "email-address" : "default" } />
       { senha && <TouchableOpacity
         onPress={ onVisualizarSenha }>
-          <FontAwesome name={ senhaVisivel ? "eye" : "eye-slash" } size={ 30 } color="#117dd4" />
+          <FontAwesome name={ senhaVisivel ? "eye" : "eye-slash" } size={ 20 } color="#117dd4" />
       </TouchableOpacity> }
     </View>
   )
