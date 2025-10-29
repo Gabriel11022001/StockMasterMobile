@@ -1,12 +1,15 @@
 import CategoriaProduto from "@/app/tipos/categoriaProduto";
 import FotoProduto from "@/app/tipos/fotoProduto";
+import Produto from "@/app/tipos/produto";
 import Botao from "@/components/Botao";
 import Campo from "@/components/Campo";
+import Loader from "@/components/Loader";
 import Tela from "@/components/Tela";
-import { useState } from "react";
-import { ScrollView } from "react-native";
+import { useEffect, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import styles from "./styles";
 
-const CadastroProduto = () => {
+const CadastroProduto = ({ navigation, route }: any) => {
 
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ produtoId, setProdutoId ] = useState<number>(0);
@@ -14,11 +17,28 @@ const CadastroProduto = () => {
   const [ precoVenda, setPrecoVenda ] = useState<string>("");
   const [ estoque, setEstoque ] = useState<string>("");
   const [ ativo, setAtivo ] = useState<boolean>(true);
+  const [ produtoAtivo, setProdutoAtivo ] = useState<boolean>(false);
+  const [ produtoInativo, setProdutoInativo ] = useState<boolean>(false);
   const [ categoria, setCategoria ] = useState<CategoriaProduto | null>(null);
   const [ foto, setFoto ] = useState<FotoProduto | null>(null);
   const [ erroNomeProduto, setErroNomeProduto ] = useState<string>("");
   const [ erroPrecoVendaProduto, setErroPrecoVendaProduto ] = useState<string>("");
   const [ erroEstoque, setErroEstoque ] = useState<string>("");
+  const [ categorias, setCategorias ] = useState<Array<{ categoriaId: number, nomeCategoria: string }>>([]);
+
+  // listar categorias do produto
+  const listarCategorias = async () => {
+    setIsLoading(true);
+
+    try {
+      console.log("Consultando as categorias de produtos no servidor...");
+    } catch (e) {
+      console.error("Erro ao tentar-se obter as categorias de produtos no servidor: " + e);
+    } finally {
+      setIsLoading(false);
+    }
+
+  }
 
   // salvar produto
   const salvarProduto = async () => {
@@ -26,11 +46,27 @@ const CadastroProduto = () => {
 
     try {
 
+      if (produtoId == 0) {
+        cadastrar();
+      } else {
+        editar();
+      }
+
     } catch (e) {
       // apresentar um alerta de erro para o usuário
     } finally {
       setIsLoading(false);
     }
+
+  }
+
+  // cadastrar produto
+  const cadastrar = async () => {
+
+  }
+  
+  // editar produto
+  const editar = async () => {
 
   }
 
@@ -104,7 +140,50 @@ const CadastroProduto = () => {
     && categoria != null;
   }
 
+  useEffect(() => {
+
+    if (ativo) {
+      setProdutoAtivo(true);
+      setProdutoInativo(false);
+    } else {
+      setProdutoAtivo(false);
+      setProdutoInativo(true);
+    }
+
+  }, [ ativo ]);
+
+  // buscar produto pelo id no servidor(produto que será editado)
+  const buscarProdutoPeloId = async () => {
+    setIsLoading(true);
+
+    try {
+      console.log("Consultando o produto no servidor...");
+    } catch (e) {
+      console.error("Erro ao tentar-se obter o produto no servidor: " + e);
+    } finally {
+      setIsLoading(false);
+    }
+
+  }
+
+  const preencherCamposDadosProduto = (produto: Produto): void => {
+
+  }
+
+  useEffect(() => {
+    listarCategorias();
+
+    if (route.params != null) {
+      setProdutoId(route.params.produtoId);
+
+      // buscar o produto pelo id
+      buscarProdutoPeloId();
+    }
+
+  }, []);
+
   return <Tela>
+    <Loader carregando={ isLoading } mensagem="Carregando, aguarde..." />
     <ScrollView>
       { /** campo para o usuário informar o nome do produto */ }
       <Campo
@@ -133,6 +212,26 @@ const CadastroProduto = () => {
         habilitado={ true }
         onAlterarValor={ (estoqueDigitado) => onDigitarEstoque(estoqueDigitado.trim())  }
         erroCampo={ erroEstoque } />
+      { /** radios para o usuário informar se o produto está ativo ou não */ }
+      <View style={ styles.containerStatusProduto }>
+        <Text>Selecione o status do produto</Text>
+        <View style={ styles.opcaoStatusProduto }>
+          <TouchableOpacity
+            style={ [ styles.radio, produtoAtivo ? styles.radioSelecionado : styles.radioNaoSelecionado ] }
+            onPress={ () => {
+              setAtivo(true);
+            } } />
+          <Text style={ styles.textoStatus }>Ativo</Text>
+        </View>
+        <View style={ styles.opcaoStatusProduto }>
+          <TouchableOpacity
+            style={ [ styles.radio, produtoInativo ? styles.radioSelecionado : styles.radioNaoSelecionado ] }
+            onPress={ () => {
+              setAtivo(false);
+            } } />
+          <Text style={ styles.textoStatus }>Inativo</Text>
+        </View>
+      </View>
       <Botao
         texto="Salvar"
         onPress={ salvarProduto }
