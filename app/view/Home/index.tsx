@@ -26,6 +26,7 @@ const Home = ({ navigation }: any) => {
       </View>
       <View style={ styles.containerOpcao }>
         <OpcaoMenuHome icone="person-walking" titulo="Vendas" onRedirecionar={ () => {} } />
+        <OpcaoMenuHome icone="person-walking" titulo="Perfil" onRedirecionar={ () => redirecionar("perfil") } />
       </View>
     </ScrollView>
   </Tela>

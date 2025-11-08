@@ -4,6 +4,7 @@ export default interface Usuario {
   email: string;
   senha: string;
   nomeCompleto?: string;
+  fotoPerfil?: { base64Foto: string, extensao: string };
 
   onApresentarDadosUsuario: () => void;
 

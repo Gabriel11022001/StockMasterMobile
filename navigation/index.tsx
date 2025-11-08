@@ -1,8 +1,10 @@
-import CadastroCliente from '@/app/view/CadastroCliente';
+import DadosBasicos from '@/app/view/CadastroCliente/DadosBasicos';
+import CadastroEnderecoCliente from '@/app/view/CadastroCliente/Endereco';
 import CadastroProduto from '@/app/view/CadastroProduto';
 import Clientes from '@/app/view/Clientes';
 import Home from '@/app/view/Home';
 import Login from '@/app/view/Login';
+import Perfil from '@/app/view/Perfil';
 import Produtos from '@/app/view/Produtos';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -42,13 +44,20 @@ const telas: Tela[] = [
     rota: "clientes",
     componente: Clientes,
     add: true,
-    addRedirecionar: "cadastroClientes"
+    addRedirecionar: "cadastroClientesDadosBasicos"
   },
   {
     titulo: "Cadastro de Cliente",
     inicial: false,
-    rota: "cadastroClientes",
-    componente: CadastroCliente,
+    rota: "cadastroClientesDadosBasicos",
+    componente: DadosBasicos,
+    add: false
+  },
+  {
+    titulo: "Endereço",
+    inicial: false,
+    rota: "cadastroEnderecoCliente",
+    componente: CadastroEnderecoCliente,
     add: false
   },
   {
@@ -65,6 +74,13 @@ const telas: Tela[] = [
     rota: "cadastroProdutos",
     componente: CadastroProduto,
     add: false
+  },
+  {
+    titulo: "Perfil",
+    componente: Perfil,
+    inicial: false,
+    add: false,
+    rota: "perfil"
   }
 ];
 
